@@ -1,6 +1,6 @@
 # iButton temperature/humidity sensors at Kampala
 
-This repo includes Python scripts supplemented to _Van de Walle et al. (2021)_ aiming at:
+This repo includes Python scripts supplemented to _Van de Walle et al. (2021, submitted)_ aiming at:
 - postprocessing raw iButton observations to a well-structured csv file (`preproces`)
 - reading those csv files to create main manuscript figures (`figscripts`)
 
