@@ -9,13 +9,12 @@ import matplotlib.patches as patches
 import settings
 import readfromcsv as RD
 
-path="/data/leuven/320/vsc32093/SCRIPTS/iButtons/kampalasensors/data/"
-csvfile=path+'Kampala_heatindex.csv'
-figsavefile='/scratch/leuven/320/vsc32093/projects/iButtons/figs/fig03.png'
+path=settings.datadir
+csvfile=path+settings.HIfile
+figsavefile=savedir+'/fig03.png'
 
 locs=['makerere','bukerere','kawanda','buloba','buziga','industrialarea','nakasero','namungoona','bwaise','najjanankumbi','nateete','nkeere','acholiq']
 THs=np.arange(30,50+1,1)
-
 
 def exceedancepercentage():
     exceedchance={}
@@ -58,7 +57,6 @@ def metricmatrix(array):
     plt.savefig(figsavefile.replace('.png','.pdf'),bbox_inches='tight')
     plt.close()
     print('*** FIG SAVED : '+figsavefile)
-
 
 if __name__=='__main__':
     matrix=exceedancepercentage()

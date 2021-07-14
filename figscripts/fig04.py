@@ -11,10 +11,10 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import settings
 import readfromcsv as RD
 
-path="/data/leuven/320/vsc32093/SCRIPTS/iButtons/kampalasensors/data/"
-csvfile=path+'Kampala_heatindex.csv'
-file_explvar=path+'Kampala_explvars.csv'
-figsavefile='/scratch/leuven/320/vsc32093/projects/iButtons/figs/fig04.png'
+path=settings.datadir
+csvfile=path+settings.HIfile
+file_explvar=path+settings.EVfile
+figsavefile=settings.savedir+'/fig04.png'
 
 colordict = {'2':'#9a0200','3':'#fd3c06','5':'#e50000','6':'#fd8d49','7':'#ffda03','8':'#d8dcd6'}
 colornumb = {'2':0,'3':1,'5':2,'6':3,'7':4,'8':5}
@@ -37,7 +37,7 @@ LCZcolorscales={\
            'Ns':2 \
           }
 
-def save_explvars(corvar,mmm,smoother=0):
+def save_explvars(corvar,mmm):
     X=np.zeros((len(settings.abbreviations.keys()),len(corvar)))
     Y=np.zeros(len(settings.abbreviations.keys()))
     Xplus=np.zeros((len(settings.abbreviations.keys()),len(corvar)+1))
@@ -63,13 +63,13 @@ def regressor(corvar,Xplus,select,printvar=False):
     regressor_OLS = sm.OLS(endog=Y, exog=X).fit()
     return X,regressor_OLS
 
-def regression_with_backward_elimination(explvar,mmm,smoother=0,verbose=False):
+def regression_with_backward_elimination(explvar,mmm,verbose=False):
     corvar=list(explvar.keys())
     corvar1=['const']+corvar
     select=np.arange(len(corvar1))
     corvarlist=list([corvar1[i] for i in select])
     if verbose: print(['const']+corvar)
-    Xplus=save_explvars(corvar,mmm,smoother=smoother)
+    Xplus=save_explvars(corvar,mmm)
     for i in range(len(select)):
         corvar1=['const']+corvar
         Xreduced,regressorOLS=regressor(corvar,Xplus,select,printvar=verbose)
@@ -99,7 +99,7 @@ def plot_bigfig(mmms,corvar,names):
     ax=np.empty(gs.get_geometry(),dtype=object)
     ir=0
     for ic in range(Ncols):
-        corvarlist,X,Yobs,Ymod,coeff,low,up,rsq=regression_with_backward_elimination(corvar,mmms[ic],smoother=4,verbose=False)
+        corvarlist,X,Yobs,Ymod,coeff,low,up,rsq=regression_with_backward_elimination(corvar,mmms[ic],verbose=False)
         if len(corvarlist)>2:
             print('!!!!! more than one explaining variable comes out of statistical model, change the code. Now I will only plot for '+str(corvarlist[-1]))
         var=str(corvarlist[-1])
@@ -115,7 +115,7 @@ def plot_bigfig(mmms,corvar,names):
         im=ax[ir,ic].scatter(data1,data2,s=150,c=lczcol,cmap=cm)
         ax[ir,ic].set_xlim(np.nanmin(data1)-0.1*(np.nanmax(data1)-np.nanmin(data1)),np.nanmax(data1)+0.1*(np.nanmax(data1)-np.nanmin(data1)))
         ax[ir,ic].set_ylabel(names[mmms[ic]]+' (°C)')
-        ax[ir,ic].set_xlabel(var+' '+str(corvar[var][0]))
+        ax[ir,ic].set_xlabel(var+' '+str(corvar[var]))
         plotmatrix=np.array([X,Ymod,low,up]).T
         pms=plotmatrix[np.argsort(plotmatrix[:,0])]
         ax[ir,ic].plot(pms[:,0],pms[:,1],c='C0',ls='-',lw=1.0)
@@ -141,11 +141,11 @@ if __name__=="__main__":
            'max' : '$H_{\\rm max}$'
           }
     explvar={\
-             'D2L' : ['(km)',5],
-             'DEM' : ['(m)',9],
-             'VF' : ['()',5],
-             'GMIS' : ['(%)',5],
-             'POP' : ['(km-2)',19],
-             'ALB' : ['(-)',0]
+             'D2L' : '(km)',
+             'DEM' : '(m)',
+             'VF'  : '()',
+             'GMIS': '(%)',
+             'POP' : '(km-2)',
+             'ALB' : '(-)'
             }
     plot_bigfig(mmms,explvar,names)

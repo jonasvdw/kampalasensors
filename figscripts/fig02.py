@@ -16,11 +16,11 @@ figurelayout=np.array([['Tmin','Tmean','Tmax'],\
                        ['RHmin','RHmean','RHmax'],\
                        ['HImin','HImean','HImax']])
 
-path="/data/leuven/320/vsc32093/SCRIPTS/iButtons/kampalasensors/data/"
-csvfile=path+'Kampala_heatindex.csv'
-GMISfile='/scratch/leuven/320/vsc32093/projects/iButtons/explainingvars/36N_gmis_impervious_surface_percentage_utm_30m.tif'
-figsavefile='/scratch/leuven/320/vsc32093/projects/iButtons/figs/fig02.png'
-plotKb=True # plot Kampala boundaries if GMIS file is available
+path=settings.datadir
+csvfile=path+settings.HIfile
+GMISfile=settings.GMISfile
+figsavefile=settings.savedir+'fig02.png'
+plotKb=False  # plot Kampala boundaries if GMIS file is available
 
 figureinformation={\
                    'Tmin'  : ['a','$T$'  ,'$^\\circ$C','RdYlBu_r'],\
