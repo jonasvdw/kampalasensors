@@ -2,6 +2,7 @@
 
 from datetime import datetime, tzinfo, timedelta
 
+
 class UTC(tzinfo):
     def utcoffset(self, dt):
         return timedelta(0)

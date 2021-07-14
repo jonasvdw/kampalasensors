@@ -45,5 +45,5 @@ def readdata_psMMM(csvfile,wanted='heatindex',mmm='max'):
     return HI
 
 if __name__=='__main__':
-    file='/data/leuven/320/vsc32093/SCRIPTS/iButtons/kampalasensors/data/Kampala_temperature.csv'
+    file=settings.datadir+'/'+Tfile
     print(readdata_psMMM(file,wanted='temperature',mmm='max'))
