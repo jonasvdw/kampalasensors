@@ -48,3 +48,12 @@ abbreviations={\
            'buziga':         'Bz',\
            'nakasero':       'Ns' \
           }
+
+datadir='/data/leuven/320/vsc32093/SCRIPTS/iButtons/kampalasensors/data/'
+savedir='/scratch/leuven/320/vsc32093/projects/iButtons/figs/'
+Tfile='Kampala_temperature.csv'
+RHfile='Kampala_humidity.csv'
+HIfile='Kampala_heatindex.csv'
+EVfile='Kampala_explvars.csv'
+
+GMISfile='/scratch/leuven/320/vsc32093/projects/iButtons/explainingvars/36N_gmis_impervious_surface_percentage_utm_30m.tif'
